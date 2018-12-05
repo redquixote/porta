@@ -3,6 +3,7 @@
 The most simple Holdings Portfolio command line with a Plugin system.
 
 Features:
+- Few lines, simple code, easy to audit (1 min). (Don't give your data to anyone)
 - simple simple plugins
 - caches requests using request_cache
 
