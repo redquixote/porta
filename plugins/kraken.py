@@ -38,5 +38,3 @@ class Plugin:
 
         request_symbol = self.MAPPING[symbol]
         return(float(self.response.json(**self._json_options)['result'][request_symbol]['c'][0]))
-
-# TODO next: colours and other currencies and clean up this kk
