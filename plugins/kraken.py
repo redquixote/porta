@@ -31,7 +31,7 @@ class Plugin:
             data = {}
         urlpath = '/' + self.apiversion + '/public/' + method + '?' + params
         url = self.uri + urlpath
-        self.response = self.session.post(
+        self.response = self.session.get(
             url, data = data, headers=None, timeout = None)
         if self.response.status_code not in (200, 201, 202):
             self.response.raise_for_status()
