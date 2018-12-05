@@ -2,10 +2,27 @@
 
 The most simple Holdings Portfolio command line with a Plugin system.
 
-Features:
+## Features:
 - Few lines, simple code, easy to audit (1 min). (Don't give your data to anyone)
 - simple simple plugins
 - caches requests using request_cache
+
+
+```
++-----------------+----------+---------+----------+---------+------------+
+| Name            | Symbol   |   Units |    Price | Change% | Curr Value |
++-----------------+----------+---------+----------+---------+------------+
+| USD -> GBP      | USD_GBP  |       1 |  0.78291 |         |            |
+| Bitcoin         | XBTUSD   |       1 | 3,860.00 |  -73.94 |   3,860.00 |
+| Ethereum        | ETHUSD   |       1 |   107.27 |         |            |
+| My Bitcoin SV   | BSVUSD   |       1 |    91.90 |         |            |
+| My Bitcoin Cash | BCHUSD   |       1 |   140.40 |         |            |
+|                 |          |         |          |   Total |   3,860.00 |
++-----------------+----------+---------+----------+---------+------------+
+
+```
+
+
 
 ## Installation
 
