@@ -10,9 +10,11 @@ import requests_cache
 from datetime import timedelta
 
 INIT_FILE = '~/.config/porta.ini'
-PLUGINS = 'plugins/'
+PLUGINS = '/plugins/'
+
 
 # setup
+curr_dir = os.path.dirname(os.path.realpath(__file__))
 locale.setlocale(locale.LC_ALL, '' )
 filename = os.path.expanduser(INIT_FILE)
 try:
@@ -28,7 +30,7 @@ requests_cache.install_cache('porta_cache', expire_after=timedelta(hours=cache_e
 #
 
 # Load plugins
-path = PLUGINS
+path = os.path.abspath(curr_dir + PLUGINS)
 plugins = {}
 sys.path.insert(0, path)
 for f in os.listdir(path):
