@@ -115,10 +115,10 @@ Current Included Plugins:
 
 - Kraken (for Cryptocurrencies)
 - Currency Converter API (for FX)
-- (add yours: See plugins directory)
+- (add yours: See plugin [plugins](plugins/) directory
 
 # TODO
 
-Check TODO.md file
+Check [TODO](TODO.md) file
 
 
