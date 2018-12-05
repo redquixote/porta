@@ -60,7 +60,10 @@ for section in config:
         dec_place_format = '%.{0}f'.format(decimal_places)
 
         try:
-            curr_val = plugin.get_current_value(symbol)
+            if section == 'default':
+                curr_val = float(config[section][subsection].get('fixed_price', 1))
+            else:
+                curr_val = plugin.get_current_value(symbol)
             if symbol and units:
                 curr_holding_val = float(curr_val) * float(units)
                 init_holding_val = ""
