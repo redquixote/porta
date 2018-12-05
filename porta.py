@@ -54,9 +54,11 @@ for section in config:
         units = config[section][subsection].get('units', None)
         decimal_places = config[section][subsection].get('decimal_places', 2)
         add_to_total = config[section][subsection].get('add_to_total', True)
+        #
         if add_to_total in ('no', 'False', '0'):
             add_to_total = False
         dec_place_format = '%.{0}f'.format(decimal_places)
+
         try:
             curr_val = plugin.get_current_value(symbol)
             if symbol and units:
