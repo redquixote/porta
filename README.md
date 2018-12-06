@@ -152,9 +152,14 @@ And you'll get something like:
 
 Current Included Plugins:
 
-- Kraken (for Cryptocurrencies)
-- Currency Converter API (for FX)
-- (add yours: See plugin [plugins](plugins/) directory
+- Cryptocurrencies:
+    - Kraken
+- FX:
+    - Currency Converter API
+- Stocks:
+    - iextrading
+- "default": for checking accounts, "savings" or non-changing price holdings
+- **add yours: See plugin [plugins](plugins/) directory**
 
 # TODO
 
