@@ -15,6 +15,7 @@ PLUGINS = '/plugins/'
 
 # setup
 curr_dir = os.path.dirname(os.path.realpath(__file__))
+cache_db_file = curr_dir + '/' + 'porta_cache'
 locale.setlocale(locale.LC_ALL, '' )
 filename = os.path.expanduser(INIT_FILE)
 try:
@@ -26,7 +27,7 @@ except Exception as e:
 #
 # Plugins using Requests will be cached for CACHE_EXPIRE_HOURS hours:
 cache_expire_hours = int(config.get('cache_hours', 2))
-requests_cache.install_cache('porta_cache', expire_after=timedelta(hours=cache_expire_hours))
+requests_cache.install_cache(cache_db_file, expire_after=timedelta(hours=cache_expire_hours))
 #
 
 # Load Plugins
