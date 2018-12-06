@@ -109,7 +109,8 @@ for section in config:
                     [
                         subsection,
                         symbol,
-                        units,
+                        # units,
+                        locale.format_string('%.2f', float(units), True),
                         locale.format_string(dec_place_format, curr_val, True),
                         Color('{autored}' + change_perc_str + '{/autored}') if diff < 0  else Color('{autogreen}' + change_perc_str + '{/autogreen}'),
                         locale.format_string(dec_place_format, curr_holding_val, True) if add_to_total else ''
