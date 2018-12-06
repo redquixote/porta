@@ -4,4 +4,5 @@
 - [ ] Proper Python distributions that install executable
 - [ ] Add attribution
 - [ ] Cache settings per plugin :LOW:
+- [ ] Add Tor for requests for privacy
 
