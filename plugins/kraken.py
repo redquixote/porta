@@ -21,7 +21,6 @@ class Plugin:
             'BCHUSD': 'BCHUSD',
             'ETHUSD': 'XETHZUSD',
         }
-        return
 
     def get_current_value(self, symbol):
         method = 'Ticker'

@@ -29,7 +29,7 @@ cache_expire_hours = int(config.get('cache_hours', 2))
 requests_cache.install_cache('porta_cache', expire_after=timedelta(hours=cache_expire_hours))
 #
 
-# Load plugins
+# Load Plugins
 path = os.path.abspath(curr_dir + PLUGINS)
 plugins = {}
 sys.path.insert(0, path)
@@ -43,17 +43,27 @@ sys.path.pop(0)
 # ############################
 table_data = [["Name", "Symbol", "Units", "Price", "Change%", "Curr Value"]]
 total_holding_value = 0
+
+default_currency = config.get('default_currency', None)
+fx_table = {}
 for section in config:
     if section not in plugins:
         continue
     print("Processing...", section)
     plugin = plugins[section]
     for subsection in config[section]:
+        # /f_tablex
+        # mandatory in .ini
         symbol = config[section][subsection].get('symbol', None)
-        ini_price = config[section][subsection].get('ini_price', None)
         units = config[section][subsection].get('units', None)
+        #
+        # optional in .ini
+        ini_price = config[section][subsection].get('ini_price', None)
+        # - if this sections hace 'currency', otherwise assume 'default_currency'. See above.
+        this_currency = config[section][subsection].get('currency', default_currency)
         decimal_places = config[section][subsection].get('decimal_places', 2)
         add_to_total = config[section][subsection].get('add_to_total', True)
+        is_fx = config[section][subsection].get('is_fx', False)
         #
         if add_to_total in ('no', 'False', '0'):
             add_to_total = False
@@ -64,6 +74,23 @@ for section in config:
                 curr_val = float(config[section][subsection].get('fixed_price', 1))
             else:
                 curr_val = plugin.get_current_value(symbol)
+                # keep fx rates:
+                if is_fx:
+                    fx_table.update({symbol: curr_val})
+                    # and the inverse for convenience:
+                    # (assume XYZABC format. so USDGBP => GBPUSD)
+                    inv_symbol = symbol[3:6] + symbol[0:3]
+                    fx_table.update({inv_symbol: 1 / curr_val})
+            # Convert currency if needed:
+            if this_currency != default_currency:
+                # convert:
+                curr_pair = '{0}{1}'.format(this_currency, default_currency)
+                if curr_pair in fx_table:
+                    curr_val = curr_val * fx_table[curr_pair]
+                else:
+                    print('WARNING: Could not find fx rate for {0}'
+                          'Consider adding the currency pair to .ini file'.format(curr_pair))
+            #
             if symbol and units:
                 curr_holding_val = float(curr_val) * float(units)
                 init_holding_val = ""
@@ -88,9 +115,10 @@ for section in config:
                     ]
                 )
         except Exception as e:
-            print('ERROR on ' + section + '. ' + str(e))
+            print('ERROR in ' + section + ' => ' + str(e))
+            # raise e
 
-# totals:
+# Totals:
 table_data.append(
     ['', '', '', '',
      Color('{autoyellow}Total{/autoyellow}'),
@@ -98,6 +126,7 @@ table_data.append(
      ]
 
 )
+# print(fx_table)
 table = AsciiTable(table_data)
 table.justify_columns[2] = "right"
 table.justify_columns[3] = "right"
