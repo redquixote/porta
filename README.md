@@ -121,7 +121,7 @@ Optional:
 
 `ini_price`
 
-Check `porta.example.ini`
+Check [porta.example.ini](porta.example.ini) for more details
 
 
 # Usage
