@@ -1,5 +1,19 @@
-import os
+"""porta
+Usage:
+    porta
+    porta fx <curr_pair> [<value>]
+    porta -h|--help
+    porta -v|--version
+
+Options:
+    <cur>  Optional currency exchange mode.
+    -h --help  Show this screen.
+    -v --version  Show version.
+"""
+
+from docopt import docopt
 import sys
+import os
 from configobj import ConfigObj
 from terminaltables import AsciiTable
 from colorclass import (
@@ -11,7 +25,6 @@ from datetime import timedelta
 
 INIT_FILE = '~/.config/porta.ini'
 PLUGINS = '/plugins/'
-
 
 # setup
 curr_dir = os.path.dirname(os.path.realpath(__file__))
@@ -41,6 +54,23 @@ for f in os.listdir(path):
         plugins[fname] = mod.Plugin()
 sys.path.pop(0)
 
+
+if __name__ == '__main__':
+    args = docopt(__doc__, version='1.0')
+    # print(args)
+    if args['fx']:
+        curr_pair = args['<curr_pair>']
+        req_value = args['<value>'] if '<value>' in args else False
+        currency_plug = plugins['currencyconverterapi']
+        try:
+            curr_val = currency_plug.get_current_value(curr_pair)
+            res = float(req_value) * curr_val if req_value else curr_val
+            print(locale.format_string('%.4f', float(res), True))
+        except Exception as e:
+            print('ERROR: ' + str(e))
+            # raise e
+        sys.exit(0)
+#
 # ############################
 table_data = [["Name", "Symbol", "Units", "Price", "Change%", "Curr Value"]]
 total_holding_value = 0
